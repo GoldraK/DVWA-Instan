@@ -20,19 +20,57 @@ PHPINI="/etc/php/7.0/apache2/php.ini"
 BTICK='`'
 SQL=''
 
+INSTALL="dvwa"
+
+usage="Program to install multiple DVWA
+
+where:
+    -h show this help text
+    -s number start instan to deploy
+    -t total instances to deploy
+    -b name base of instances
+    -d web directory to install DVWA
+    -p php.ini file to enabled url include
+    -i to install apache use all"
+
+
 #Check if root
 if (( $EUID != 0 )); then
     echo "Please run as root"
     exit
 fi
 
-#Update an upgrade system
-sudo apt-get update
-sudo apt-get upgrade
 
-#Install apache, php, mysql, unzip
-sudo apt-get install apache2 libapache2-mod-php7.0 php7.0 mysql-server php7.0-mysql phpmyadmin unzip
+while getopts s:t:b:d:p:i:h option
+do
+ case "${option}"
+ in
+ s) START=${OPTARG};;
+ t) TOTAL=${OPTARG};;
+ b) UNAMEBASE=${OPTARG};;
+ d) DIRECTORYWEB=${OPTARG};;
+ p) PHPINI=${OPTARG};;
+ i) INSTALL=$OPTARG;;
+ h) echo "$usage"
+    exit
+    ;;
+ esac
+done
 
+
+if [ "$INSTALL" == "all" ]
+	then
+	echo "Install glamp..."
+	#Update an upgrade system
+	sudo apt-get update
+	sudo apt-get upgrade
+
+	#Install apache, php, mysql, unzip
+	sudo apt-get install apache2 libapache2-mod-php7.0 php7.0 mysql-server php7.0-mysql phpmyadmin unzip
+
+fi
+
+echo "Download DVWA..."
 #Download DVWA
 wget https://github.com/ethicalhack3r/DVWA/archive/master.zip
 
@@ -91,4 +129,4 @@ echo "Reload apache"
 
 service apache2 reload
 
-echo "Now can use DVWA Happy Hacking"
+echo "Now can use DVWA Happy Hacking" 
