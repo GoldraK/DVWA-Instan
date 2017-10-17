@@ -5,12 +5,20 @@ The DVWA-insta Script generates the required DVWA software installations to lear
 
 The script is thinking for new installations, it will be tested on ubuntu 16.04
 
-# Variables
+# Parameters
 
-* START -> First number of the necessary instances
-* TOTAL -> Total number of instances required
-* UNAMEBASE -> base name of instances
-* DIRECTORYWEB -> Directory where they will be installed
-* PHPINI -> location of php.ini to activate url include
+    -h show this help text
+    -s number start instan to deploy
+    -t total instances to deploy
+    -b name base of instances
+    -d web directory to install DVWA
+    -p php.ini file to enabled url include
+    -i to install apache use all"
+
+
+# Contributions
+
+* [GoldraK](twitter.com/goldrak)
+* [Cloud_099](https://twitter.com/cloud_099)
 
 It must be run as root.
